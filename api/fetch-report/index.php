@@ -184,19 +184,7 @@ else
 
 
 
-	$where .= " AND (plan =".$db->quote($plan)." )";
-
-
-
-
-
-
-
-
-
-
-
-
+$where .= " AND (plan =".$db->quote($plan)." )";
 
 $where = " WHERE ". $where;
 $group_by = "";
@@ -214,13 +202,11 @@ if(isset($view_length) )
 
 
 $sql ="
-SELECT year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',brand,country,channel,season,fc,plan, f.week, sum(f.unit_sales) AS 'sum_usls',sum(f.unit_sales * f.air) AS 'sum_initrtl',sum(f.unit_sales * f.aur) AS 'sum_rtlsls',  sum(f.unit_sales * f.auc) AS 'sum_cogs',  sum(recs) as 'sum_recs',
-sum(f.recplaceholder) as 'sum_recph',sum(f.invIT) as 'sum_intIT', sum(f.onorder) as 'sum_oo', sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh' ";
-
-
+SELECT year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',brand,country,channel,season,fc,plan, f.week, sum(f.salesUnits) AS 'sum_usls',sum(f.salesUnits * f.air) AS 'sum_initrtl',
+sum(f.salesUnits * f.aur) AS 'sum_rtlsls',  sum(f.salesUnits * f.auc) AS 'sum_cogs',  sum(recUnits) as 'sum_recs',
+sum(f.phUnits) as 'sum_recph', sum(f.sohAdj) as 'sum_adj', sum(f.storeInv) as 'sum_oh' ";
 
 	}
-
 
 
 
@@ -233,7 +219,7 @@ sum(f.recplaceholder) as 'sum_recph',sum(f.invIT) as 'sum_intIT', sum(f.onorder)
 
 }
 
-$sql .="FROM forecast  f LEFT JOIN fiscal_short s ON f.year = s.calendar_year AND f.week = s.week_label ";
+$sql .="FROM tblforecast f LEFT JOIN fiscal_short s ON f.year = s.fiscal_year AND f.week = s.week_label ";
 
 
 

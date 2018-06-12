@@ -1,4 +1,7 @@
 <?php
+include '../applogic/app-config.php';
+include '../applogic/db-connect.php';
+
 $brand=$_GET["brand"];
 $fc=$_GET["fc"];
 $year=$_GET["year"];
@@ -8,20 +11,16 @@ $plan=$_GET['plan'];
 #echo $Brand
 // Initialize variable for database credentials
 //'http://172.24.115.30/testing/';
-$dbhost =  'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$dbname = 'feature-code';
 
 //Create database connection
-$dblink = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+$dblink = new mysqli($HOST, $USERNAME, $PASSWORD, $DATABASE);
 
 //Check connection was successful
 if ($dblink->connect_errno) {
     printf("Failed to connect to database");
     exit();
 }
-$sql="SELECT * FROM history";
+$sql="SELECT * FROM tblhistory";
 $where=" WHERE Brand='". $brand ."' AND Channel='" . $channel ."' AND Country='" .$country.
 "' AND Year>=" . $year . " AND FC='". $fc."'";
  //AND Plan='".$plan."'";

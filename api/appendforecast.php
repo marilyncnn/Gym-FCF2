@@ -55,7 +55,7 @@ $fcstVer=$_REQUEST["forecastVer"];
 $plan=$_REQUEST["plan"];
 
 
-$fc_id = 0;
+/*$fc_id = 0;
 
 
 $sql1 = "SELECT id from fc_setup";
@@ -71,7 +71,7 @@ if ($result)
         $fc_id = $result["id"];
     }
 
-
+*/
 
 
 
@@ -142,30 +142,40 @@ foreach($data as $Forecast) {
 
 
 
-    if(!isset($Forecast['unit_sales']))
-    { echo nl2br("\n no record ". "fiscal Wk " . $Forecast['Week'] ." ". ++$x );
+    if(!isset($Forecast['salesUnits']))
+    { echo nl2br("\n no record ". "fiscal Wk " . $Forecast['week'] ." ". ++$x );
     }
     else {
-        
+
     //get the forecast details
-        $Yr = $Forecast['Year'];
-       // $Brand = $Forecast['Brand'];
-        $Channel = $Forecast['Channel'];
-        $Season = $Forecast['Season'];
-        $FC = $Forecast['FC'];
-        $Wk = $Forecast['Week'];
-        $Usls = $Forecast['unit_sales'];
+        $yr = $Forecast['year'];
+        $plan=$Forecast['plan'];
+        $channel = $Forecast['channel'];
+        $season = $Forecast['season'];
+        $fc = $Forecast['fc'];
+        $wk = $Forecast['week'];
+
+        $uSls = $Forecast['salesUnits'];
         $air = $Forecast['air'];
         $aur = $Forecast['aur'];
         $auc = $Forecast['auc'];
-        $storeoh = $Forecast['onhand'];
-        $recs = $Forecast['recs'];
-        $adj = $Forecast['adj'];
-        $plan=$Forecast['Plan'];
-        $dcoh=$Forecast['dcoh'];
-        $recPH=$Forecast['recplaceholder'];
-        $invIT=$Forecast['invIT'];
-        $oo=$Forecast['onorder'];
+
+        $recU = $Forecast['recUnits'];
+        $recCost = $Forecast['recCost'];
+        $recRtl = $Forecast['recRtl'];
+        $recAir = $Forecast['recAIR'];
+        $recAuc = $Forecast['recAUC'];
+        $phUnits=$Forecast['phUnits'];
+        $phCost=$Forecast['phCost'];
+        $phRtl=$Forecast['phRtl'];
+
+        $bop = $Forecast['bopUnits'];
+        $storeoh = $Forecast['storeInv'];
+        $dcoh=$Forecast['dcInv'];
+        $adj = $Forecast['sohAdj'];
+        $transIn = $Forecast['transIn'];
+        $transOut = $Forecast['transOut'];
+
         //insert into mysql table
 
 
@@ -232,20 +242,13 @@ if ($log_sql)
 }
 
 
-
-
-
-
-
-
-
 /*$sql = "INSERT INTO forecast(year, brand, country, channel, season, fc, week, unit_sales, air, aur, auc, storeoh, recs, adj, plan, dcoh, recplaceholder,invIT,onorder)
             VALUES($Yr, '$brand', '$country', '$Channel', '$Season', '$FC', $Wk, $Usls, $air,$aur,$auc,$storeoh,$recs,$adj,'$plan',$dcoh,$recPH,$invIT,$oo, dbnotes,fc_id)";
 */
 
 
-$sql = "INSERT INTO forecast(year, brand, country, channel, season, fc, week, unit_sales, air, aur, auc,recs, adj, onhand, plan, recplaceholder,invIT,onorder, datelast, dbnotes,fc_id)
-            VALUES($Yr, '$brand', '$country', '$Channel', '$Season', '$FC', $Wk, $Usls, $air,$aur,$auc,$recs,$adj, $storeoh,'$plan',$recPH,$invIT,$oo , NOW(), '$author',$fc_id)";
+$sql = "INSERT INTO forecast(year, plan, brand, country, channel, season, fc, week, salesUnits, air, aur, auc,recUnits,recCost, recRtl, recAIR,recAUC, phUnits,phCost, phRtl,bopUnits,storeInv,dcInv,sohAdj, transIn, transOut,datelast, dbnotes)
+            VALUES($yr, '$plan', '$brand', '$country', '$channel', '$season', '$fc', $wk, $usls, $air,$aur,$auc,$recU,$recCost,$recRtl, $recAir, $recAUC,$phUnits,$phCost,$phRtl,$bop,$storeoh, $dcoh,$adj, $transIn ,$transOut , NOW(), '$author')";
 
 
 if ($log_sql)

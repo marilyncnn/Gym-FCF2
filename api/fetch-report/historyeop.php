@@ -213,8 +213,8 @@ sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh', f.fc as realfc ";
 */
 
 $sql="
-Select f.year,e.quarter, e.fiscal_MoNbr as mthnbr,brand,channel,country, season,fc ,onhand
-from forecast f
+Select f.year,e.quarter, e.fiscal_MoNbr as mthnbr,brand,channel,country, season,fc ,storeInv
+from tblforecast f
 Inner join fiscal_eop e on f.week=e.eopwk ";
 	}
 

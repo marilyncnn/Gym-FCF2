@@ -186,18 +186,6 @@ else
 
 //	$where .= " AND (plan =".$db->quote($plan)." )";
 
-
-
-
-
-
-
-
-
-
-
-
-
 $where = " WHERE ". $where;
 
 $group_by = "";
@@ -220,28 +208,19 @@ sum(f.unit_sales * f.air) AS 'sum_initrtl',sum(f.unit_sales * f.aur) AS 'sum_rtl
 sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh' ";
 */
 $sql="
-SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo', f.brand,f.country,f.channel,f.season, f.fc as fc, sum(f.unit_sales) AS 'sum_usls',
-sum(f.unit_sales * f.air) AS 'sum_initrtl',sum(f.unit_sales * f.aur) AS 'sum_rtlsls', sum(f.unit_sales * f.auc) AS 'sum_cogs', sum(recs) as 'sum_recs',
-sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh', f.fc as realfc ";
+SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo', f.brand,f.country,f.channel,f.season, f.fc as fc, sum(f.salesUnits) AS 'sum_usls',
+sum(f.salesUnits * f.air) AS 'sum_initrtl',sum(f.salesUnits * f.aur) AS 'sum_rtlsls', sum(f.salesUnits * f.auc) AS 'sum_cogs', sum(recUnits) as 'sum_recs',
+sum(f.sohAdj) as 'sum_adj', sum(f.strInv) as 'sum_oh', f.fc as realfc ";
 
 	}
-
-
 
 
 	if ($view_length=="week") $group_by = " GROUP by year, f.week ,f.fc Order by f.season, f.fc, year, s.quarter, s.fiscal_MoNbr,f.week";
 	if ($view_length=="month") $group_by = " GROUP by year, s.fiscal_MoNbr,f.fc Order by f.season, f.fc, year, s.quarter, s.fiscal_MoNbr";
 	if ($view_length=="quarter") $group_by = " GROUP by year, s.quarter, f.fc  Order by f.season, f.fc, year, s.quarter, s.fiscal_MoNbr";
-
-
-
-
 }
 
-$sql .="FROM history_realigned f LEFT Join fiscal_calendar s ON f.year = s.fiscal_year AND f.reAlignedWk = s.fiscal_week ";
-
-
-
+$sql .="FROM tblhistory f LEFT Join fiscal_calendar s ON f.year = s.fiscal_year AND f.week = s.fiscal_week ";
 
 $sql_statement=  $sql . $where  . $group_by ;
 //Fetch rows
