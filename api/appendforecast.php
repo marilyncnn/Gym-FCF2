@@ -12,9 +12,6 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
 
 */
 
-
-
-
 $log_sql = true; // save debug json posts.
 $debug_mode = false;
 
@@ -74,7 +71,7 @@ if ($result)
 */
 
 
-
+#echo $plan;
 
 //Make sure that the content type of the POST request has been set to application/json
 $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
@@ -98,7 +95,7 @@ if ($log_sql)
 
 
 
- if($content)
+if($content)
     {
 
 
@@ -107,7 +104,6 @@ if ($log_sql)
     $instmt = $db->prepare($in);
     $instmt->execute($insert);
 
-   // echo $content;
     }
 
 
@@ -119,14 +115,16 @@ $data = json_decode($content, true);
 
 // var_dump($content);
 // Attempt to decode the incoming RAW post data from JSON.
-
-
+#echo "ahere22";
+#echo !is_array($data);
 //If json_decode failed, the JSON is invalid.
 if(!is_array($data)){
+    echo 'Received content contained invalid JSON!';
     throw new Exception('Received content contained invalid JSON!');
+
 }
 
-
+#echo "here1";
 
 
 
@@ -134,8 +132,6 @@ $x=0;
 
 // THIS could be problematic...
 // Move delete to loop.
-
-
 
 
 foreach($data as $Forecast) {
@@ -155,26 +151,30 @@ foreach($data as $Forecast) {
         $fc = $Forecast['fc'];
         $wk = $Forecast['week'];
 
-        $uSls = $Forecast['salesUnits'];
+        $usls = $Forecast['salesUnits'];
         $air = $Forecast['air'];
         $aur = $Forecast['aur'];
         $auc = $Forecast['auc'];
+        $bop = $Forecast['bopUnits'];
 
-        $recU = $Forecast['recUnits'];
+      /*  $recU = $Forecast['recUnits'];
         $recCost = $Forecast['recCost'];
         $recRtl = $Forecast['recRtl'];
         $recAir = $Forecast['recAIR'];
         $recAuc = $Forecast['recAUC'];
+        */
+        $adj = $Forecast['sohAdjust'];
+        $transIn = $Forecast['transIn'];
+        $transOut = $Forecast['transOut'];
+        $dcoh=$Forecast['dcInv'];
         $phUnits=$Forecast['phUnits'];
         $phCost=$Forecast['phCost'];
         $phRtl=$Forecast['phRtl'];
 
-        $bop = $Forecast['bopUnits'];
-        $storeoh = $Forecast['storeInv'];
-        $dcoh=$Forecast['dcInv'];
-        $adj = $Forecast['sohAdj'];
-        $transIn = $Forecast['transIn'];
-        $transOut = $Forecast['transOut'];
+
+        #$storeoh = $Forecast['storeInv'];
+
+
 
         //insert into mysql table
 
@@ -222,15 +222,16 @@ if ($debug_mode == true)
 
 
 
-$Wk = intval($Wk);
+$Wk = intval($wk);
 
 
-$sql = "DELETE from forecast";
-$where=" WHERE brand='". $brand ."' AND channel='" . $channel . "' AND year='" . $fiscalYr . "' AND fc='". $fc."' AND plan='".$plan. "'
+$sql = "DELETE from tblforecast";
+$where=" WHERE brand='". $brand ."' AND channel='" . $channel . "' AND year='" . $yr . "' AND fc='". $fc."' AND plan='".$plan. "'
 AND season ='".$season."'
 AND country='".$country."'
-AND week = $Wk ";
+AND week = $wk ";
 $sql=$sql.$where;
+
 $stmt= $db->query($sql);
 
 // Delete Record.
@@ -240,16 +241,17 @@ if ($log_sql)
     $instmt = $db->prepare($in);
     $instmt->execute($insert);
 }
-
+#echo $sql;
 
 /*$sql = "INSERT INTO forecast(year, brand, country, channel, season, fc, week, unit_sales, air, aur, auc, storeoh, recs, adj, plan, dcoh, recplaceholder,invIT,onorder)
             VALUES($Yr, '$brand', '$country', '$Channel', '$Season', '$FC', $Wk, $Usls, $air,$aur,$auc,$storeoh,$recs,$adj,'$plan',$dcoh,$recPH,$invIT,$oo, dbnotes,fc_id)";
 */
 
 
-$sql = "INSERT INTO forecast(year, plan, brand, country, channel, season, fc, week, salesUnits, air, aur, auc,recUnits,recCost, recRtl, recAIR,recAUC, phUnits,phCost, phRtl,bopUnits,storeInv,dcInv,sohAdj, transIn, transOut,datelast, dbnotes)
-            VALUES($yr, '$plan', '$brand', '$country', '$channel', '$season', '$fc', $wk, $usls, $air,$aur,$auc,$recU,$recCost,$recRtl, $recAir, $recAUC,$phUnits,$phCost,$phRtl,$bop,$storeoh, $dcoh,$adj, $transIn ,$transOut , NOW(), '$author')";
+$sql = "INSERT INTO tblforecast(year, plan, brand, country, channel, season, fc, week, salesUnits, air, aur, auc, phUnits,phCost, phRtl,bopUnits,dcInv,sohAdjust, transIn, transOut,datelast, dbnotes)
+            VALUES($yr, '$plan', '$brand', '$country', '$channel', '$season', '$fc', $wk, $usls, $air,$aur,$auc,$phUnits,$phCost,$phRtl,$bop,$dcoh,$adj, $transIn ,$transOut , NOW(), '$author')";
 
+#echo $sql;
 
 if ($log_sql)
 {
@@ -272,7 +274,8 @@ if ($stmt)
 else
 {
   //  echo "didn't";
-    die(" Problem with Fiscal Wk:". $Wk);
+  echo "Error inserting record into tblforecast:";
+    die(" Problem starting with Fiscal Wk:". $yr.$Wk);
 }
 
 
@@ -300,5 +303,6 @@ else
     }
 }
 echo $success . " records processed";
+
 session_unset();
 ?>

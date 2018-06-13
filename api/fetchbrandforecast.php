@@ -13,7 +13,7 @@ $fc=$_GET["fc"];
 $year=$_GET["year"];
 $channel=$_GET["channel"];
 $plan=$_GET['plan'];
-
+$plantype=$_GET['plantype'];
 // Initialize variable for database credentials
 /*$dbhost = 'localhost';
 $dbuser = 'root';
@@ -37,13 +37,19 @@ LEFT JOIN onorder ON tblforecast.Year = tblonorder.Yr and tblforecast.Week = tbl
 and tblforecast.Brand = tblonorder.Division AND tblforecast.Country = 'USA'
 and tblforecast.Channel = tblonorder.Chan and tblforecast.FC = tblonorder.FC";
 */
-$sql="SELECT tblforecast.*, tblonorder.Units as 'ooUnits', tblonorder.Cost as 'ooCost', tblonorder.Retail as 'ooRetail'
-FROM tblforecast LEFT JOIN tblonorder ON tblforecast.year = tblonorder.year and
-tblforecast.week = tblonorder.week and tblforecast.Brand = tblonorder.brand AND tblforecast.country = tblonorder.country AND
-tblforecast.channel = tblonorder.channel and tblforecast.fc = tblonorder.fc";
+$where=" WHERE f.Year>=" . $year. " AND f.brand='". $brand ."' AND f.channel='" . $channel ."' AND f.country='" .$country."'";
 
-$where=" WHERE tblforecast.Year >=" . $year. " AND tblforecast.brand='". $brand ."' AND tblforecast.channel='" . $channel ."' AND tblforecast.country='" .$country.
-"' AND tblforecast.fc='". $fc."' AND tblforecast.plan='".$plan."'";
+if ($plantype=="forecast") {
+  #echo $plantype;
+  $sql="SELECT * from brand_forecast f";
+  $where=$where." AND f.plan='".$plan."'";
+#echo $sql;
+}
+else {
+    #echo $plantype;
+  $sql="SELECT * from brand_history f";
+}
+
 #" OR Plan='LY')";""
 
 //(Plan='".$plan."' OR Plan='LY')";

@@ -183,8 +183,7 @@ else
 */
 
 
-
-$where .= " AND (plan =".$db->quote($plan)." )";
+$where .= " AND (plan =".$db->quote($plan)." ) AND f.week>18";
 
 $where = " WHERE ". $where;
 $group_by = "";
@@ -202,9 +201,9 @@ if(isset($view_length) )
 
 
 $sql ="
-SELECT year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',brand,country,channel,season,fc,plan, f.week, sum(f.salesUnits) AS 'sum_usls',sum(f.salesUnits * f.air) AS 'sum_initrtl',
+SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',brand,country,channel,season,fc,plan, f.week, sum(f.salesUnits) AS 'sum_usls',sum(f.salesUnits * f.air) AS 'sum_initrtl',
 sum(f.salesUnits * f.aur) AS 'sum_rtlsls',  sum(f.salesUnits * f.auc) AS 'sum_cogs',  sum(recUnits) as 'sum_recs',
-sum(f.phUnits) as 'sum_recph', sum(f.sohAdj) as 'sum_adj', sum(f.storeInv) as 'sum_oh' ";
+sum(f.phUnits) as 'sum_recph', sum(f.sohAdjust) as 'sum_adj', sum(f.storeInv) as 'sum_oh' ";
 
 	}
 
@@ -219,7 +218,7 @@ sum(f.phUnits) as 'sum_recph', sum(f.sohAdj) as 'sum_adj', sum(f.storeInv) as 's
 
 }
 
-$sql .="FROM tblforecast f LEFT JOIN fiscal_short s ON f.year = s.fiscal_year AND f.week = s.week_label ";
+$sql .="FROM tblforecast f LEFT JOIN fiscal_short s ON f.year = s.fiscal_year AND f.week = s.week_label INNER JOIN active_fclist a on a.FCDesc=f.fc";
 
 
 

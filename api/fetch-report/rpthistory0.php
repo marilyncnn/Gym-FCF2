@@ -147,12 +147,12 @@ if ($view_type =='q1' || $view_type =='q2' ||  $view_type =='q3' || $view_type =
 {
 	// search by quarter using  fiscal_calendar
 	$quarter_search = true;
-	$where .= " AND s.fiscal_year = ".$db->quote($year) ."  AND s.`quarter` = " . str_replace('q','',$view_type);
+	$where .= " AND s.fiscal_year >= ".$db->quote($year) ."  AND s.`quarter` = " . str_replace('q','',$view_type);
 }
 
 else
 {
-	$where .= " AND s.fiscal_year = ".$db->quote($year) ."  ";
+	$where .= " AND s.fiscal_year>= ".$db->quote($year) ."  ";
 
 }
 
@@ -210,7 +210,7 @@ sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh' ";
 $sql="
 SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo', f.brand,f.country,f.channel,f.season, f.fc as fc, sum(f.salesUnits) AS 'sum_usls',
 sum(f.salesUnits * f.air) AS 'sum_initrtl',sum(f.salesUnits * f.aur) AS 'sum_rtlsls', sum(f.salesUnits * f.auc) AS 'sum_cogs', sum(recUnits) as 'sum_recs',
-sum(f.sohAdj) as 'sum_adj', sum(f.strInv) as 'sum_oh', f.fc as realfc ";
+sum(f.sohAdjust) as 'sum_adj', sum(f.storeInv) as 'sum_oh', f.fc as realfc ";
 
 	}
 
@@ -220,7 +220,7 @@ sum(f.sohAdj) as 'sum_adj', sum(f.strInv) as 'sum_oh', f.fc as realfc ";
 	if ($view_length=="quarter") $group_by = " GROUP by year, s.quarter, f.fc  Order by f.season, f.fc, year, s.quarter, s.fiscal_MoNbr";
 }
 
-$sql .="FROM tblhistory f LEFT Join fiscal_calendar s ON f.year = s.fiscal_year AND f.week = s.fiscal_week ";
+$sql .="FROM tblhistory f LEFT Join fiscal_calendar s ON f.year = s.fiscal_year AND f.week = s.fiscal_week "; #INNER JOIN active_fclist a on a.FCDesc=f.fc";
 
 $sql_statement=  $sql . $where  . $group_by ;
 //Fetch rows

@@ -7,7 +7,7 @@ error_reporting(0);
 $debug_mode = false; //
 
 
-$search_array = array ("brand","country","channel");
+$search_array = array ("brand","country","channel","Plan");
 
 $plan = isset($_REQUEST['plan']) ? $_REQUEST['plan'] : NULL ;
 $season = isset($_REQUEST['season']) ? $_REQUEST['season'] : NULL ;
@@ -147,12 +147,12 @@ if ($view_type =='q1' || $view_type =='q2' ||  $view_type =='q3' || $view_type =
 {
 	// search by quarter using  fiscal_calendar
 	$quarter_search = true;
-	$where .= " AND e.`quarter` = " . str_replace('q','',$view_type);
+	$where .= " AND f.year = ".$db->quote($year) ."  AND e.`quarter` = " . str_replace('q','',$view_type);
 }
 
 else
 {
-	#$where .= " AND f.year = ".$db->quote($year) ."  ";
+	$where .= " AND f.year = ".$db->quote($year) ."  ";
 
 }
 
@@ -176,7 +176,7 @@ if ($view_month>0)
 //else
 if (isset($compare_plan)){
 
-#	$where .= " AND (plan =".$db->quote($plan)." )";
+	$where .= " AND (plan =".$db->quote($plan)." )";
 
 }
 
@@ -215,7 +215,7 @@ sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh', f.fc as realfc ";
 $sql="
 Select f.year,e.quarter, e.fiscal_MoNbr as mthnbr,brand,channel,country, season,fc,
 if(isnull(storeInv),0,storeInv)+if(isnull(dcInv),0,dcInv) as 'EOPInv'
-from tblHistory f
+from tblforecast f
 Inner join fiscal_eop e on f.week=e.eopwk ";
 	}
 
