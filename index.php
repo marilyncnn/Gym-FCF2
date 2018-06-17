@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <title>Feature Code Forecast - Beta</title>
+        <title>Feature Code Forecast - Version 2.0</title>
 
         <link rel="stylesheet" href="styles.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,17 +14,17 @@
         <center>
         <h3>Gymboree Group</h3>
         <h1>Feature Code</h1>
-        <h2>Beta</h2>
+        <h2>Version 2.0</h2>
         <div class="actions">
 
-            <a href="excel/FC reporting - gen1.xlsm" class = "action-link">
+            <a href="excel/FC reporting v2.xlsm" class = "action-link">
                 <div class = "action">
 
                     <i class="material-icons">layers</i>
                     <p>Reporting</p>
                 </div>
             </a>
-            <a href="excel/FC Sales Forecast.xlsm" class = "action-link">
+            <a href="excel/FC Sales Forecast v2.xlsm" class = "action-link">
                 <div class = "action">
 
                     <i class="material-icons">border_color</i>

@@ -1,0 +1,108 @@
+html {
+
+    text-transform: capitalize;
+    font-family: 'Biryani', sans-serif;
+}
+
+h3 {
+
+  padding-top: 3em;
+  margin-bottom: 0px;
+  font-size: 1.5em;
+  color: #a9a4a4;
+  font-weight: 400;
+
+}
+
+h1 {
+
+  margin-top: 0px;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 4em;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  color: #0e82b7;
+
+}
+
+h2 {
+
+  margin-top: 0px;
+  padding-top: 0px;
+  color: #999;
+  font-weight: 100;
+
+}
+
+.material-icons {
+
+  font-size: 100px !important;
+  color: #71d3ff;
+
+}
+
+.actions {
+
+  padding-top: 100px;
+  display: flex;
+  max-width: 800px;
+  justify-content: space-around;
+  align-items: center;
+
+
+
+}
+.action {
+
+  display: flex;
+  margin: 1em;
+  padding: 20px;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 175px;
+  height: 210px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.33), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.5s cubic-bezier(.25,.8,.25,1);
+
+
+}
+
+.action-link {
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #848484;
+
+}
+
+.action-link:hover {
+
+  color: #333;
+  transition: all 0.8s cubic-bezier(.25,.8,.25,1);
+
+}
+
+
+.action:hover {
+
+  box-shadow: 0 2px 28px rgba(0,0,0,0.16), 0 10px 10px rgba(0, 0, 0, 0.42);
+
+
+}
+
+
+
+
+.action i {
+
+  transition: all 0.8s cubic-bezier(.25,.8,.25,1);
+
+}
+.action:hover i {
+
+  color: #05b2ff;
+
+}
