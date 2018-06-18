@@ -248,8 +248,8 @@ if ($log_sql)
 */
 
 
-$sql = "INSERT INTO tblforecast(year, plan, brand, country, channel, season, fc, week, salesUnits, air, aur, auc, phUnits,phCost, phRtl,bopUnits,dcInv,sohAdjust, transIn, transOut,datelast, dbnotes)
-            VALUES($yr, '$plan', '$brand', '$country', '$channel', '$season', '$fc', $wk, $usls, $air,$aur,$auc,$phUnits,$phCost,$phRtl,$bop,$dcoh,$adj, $transIn ,$transOut , NOW(), '$author')";
+$sql = "INSERT INTO tblforecast(year, plan, brand, country, channel, season, fc, week, salesUnits, air, aur, auc, phUnits,phCost, phRtl,bopUnits,dcInv,sohAdjust, transIn, transOut,datelast, dbnotes,reforecast)
+            VALUES($yr, '$plan', '$brand', '$country', '$channel', '$season', '$fc', $wk, $usls, $air,$aur,$auc,$phUnits,$phCost,$phRtl,$bop,$dcoh,$adj, $transIn ,$transOut , NOW(), '$author',false)";
 
 #echo $sql;
 
