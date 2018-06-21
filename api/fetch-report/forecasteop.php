@@ -210,11 +210,16 @@ sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh' ";
 SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo', f.brand,f.country,f.channel,f.season, f.fc as fc, sum(f.unit_sales) AS 'sum_usls',
 sum(f.unit_sales * f.air) AS 'sum_initrtl',sum(f.unit_sales * f.aur) AS 'sum_rtlsls', sum(f.unit_sales * f.auc) AS 'sum_cogs', sum(recs) as 'sum_recs',
 sum(f.adj) as 'sum_adj', sum(f.onhand) as 'sum_oh', f.fc as realfc ";
+$sql="
+Select f.year,e.quarter, e.fiscal_MoNbr as mthnbr,brand,channel,country, season,fc,
+if(isnull(storeInv),0,storeInv)+if(isnull(dcInv),0,dcInv) as 'EOPInv'
+from tblforecast f
+Inner join fiscal_eop e on f.week=e.eopwk ";
 */
 
 $sql="
 Select f.year,e.quarter, e.fiscal_MoNbr as mthnbr,brand,channel,country, season,fc,
-if(isnull(storeInv),0,storeInv)+if(isnull(dcInv),0,dcInv) as 'EOPInv'
+bopUnits as 'EOPInv'
 from tblforecast f
 Inner join fiscal_eop e on f.week=e.eopwk ";
 	}
