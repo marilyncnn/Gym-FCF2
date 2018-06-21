@@ -12,6 +12,7 @@ $search_array = array ("brand","country","plan","channel");
 $plan = isset($_REQUEST['plan']) ? $_REQUEST['plan'] : NULL ;
 $season = isset($_REQUEST['season']) ? $_REQUEST['season'] : NULL ;
 $year = isset($_REQUEST['year']) ? $_REQUEST['year'] : NULL ;
+$week = isset($_REQUEST['week']) ? $_REQUEST['week'] : NULL ;
 $compare_plan = isset($_REQUEST['compare_plan']) ? $_REQUEST['compare_plan'] : NULL ;
 $view_type = isset($_REQUEST['view']) ? $_REQUEST['view'] : NULL ;
 $sqlshow = isset($_REQUEST['sql']) ? $_REQUEST['sql'] : NULL ;
@@ -183,7 +184,7 @@ else
 */
 
 
-$where .= " AND (plan =".$db->quote($plan)." ) AND f.week>18";
+$where .= " AND (plan =".$db->quote($plan)." ) AND f.week>".$week;
 
 $where = " WHERE ". $where;
 $group_by = "";
@@ -201,7 +202,7 @@ if(isset($view_length) )
 
 
 $sql ="
-SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',brand,country,channel,season,fc,plan, f.week, sum(f.salesUnits) AS 'sum_usls',sum(f.salesUnits * f.air) AS 'sum_initrtl',
+SELECT f.year,s.quarter, s.fiscal_MoNbr AS 'fiscalmo',f.brand,f.country,f.channel,f.season,f.fc,f.plan, f.week, sum(f.salesUnits) AS 'sum_usls',sum(f.salesUnits * f.air) AS 'sum_initrtl',
 sum(f.salesUnits * f.aur) AS 'sum_rtlsls',  sum(f.salesUnits * f.auc) AS 'sum_cogs',  sum(recUnits) as 'sum_recs',
 sum(f.phUnits) as 'sum_recph', sum(f.sohAdjust) as 'sum_adj', sum(f.storeInv) as 'sum_oh' ";
 
@@ -218,7 +219,8 @@ sum(f.phUnits) as 'sum_recph', sum(f.sohAdjust) as 'sum_adj', sum(f.storeInv) as
 
 }
 
-$sql .="FROM tblforecast f LEFT JOIN fiscal_short s ON f.year = s.fiscal_year AND f.week = s.week_label INNER JOIN active_fclist a on a.FCDesc=f.fc";
+$sql .="FROM tblforecast f LEFT JOIN fiscal_short s ON f.year = s.fiscal_year AND f.week = s.week_label INNER JOIN active_fclist a on a.FCDesc=f.fc
+ and f.brand=a.brand";
 
 
 
