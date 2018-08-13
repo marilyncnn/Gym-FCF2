@@ -39,7 +39,7 @@ $dbdata = array();
 while ( $row = $result->fetch_assoc())  {
     $dbdata[]=$row;
 }
-
+#echo $sql;
 //Print array in JSON format
 $json=json_encode($dbdata);
 echo $json;

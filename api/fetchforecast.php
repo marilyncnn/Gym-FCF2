@@ -28,7 +28,7 @@ if ($dblink->connect_errno) {
     printf("Failed to connect to database");
     exit();
 }
-
+#Echo $plan;
 
 #echo "before sql";
 #$sql="SELECT * FROM forecast";
