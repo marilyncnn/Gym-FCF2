@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `feature-code2` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `feature-code2`;
+CREATE DATABASE  IF NOT EXISTS `fc-test` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `fc-test`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: feature-code2
+-- Host: 127.0.0.1    Database: fc-test
 -- ------------------------------------------------------
 -- Server version	5.5.45
 
